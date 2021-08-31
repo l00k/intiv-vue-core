@@ -1,4 +1,4 @@
-import { AbstractModel, Model, Property, Group } from '@/core/Domain/Model';
+import { AbstractModel, Model, Property, Group } from '@/intiv/core/Domain/Model';
 
 
 @Model()

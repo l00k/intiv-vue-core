@@ -1,7 +1,7 @@
-import App from '@/core/App';
-import { AbstractModel } from '@/core/Domain/Model';
-import { EventBus } from '@100k/intiv/EventBus/index';
-import { ObjectManager } from '@100k/intiv/ObjectManager/index';
+import App from '@/intiv/core/App';
+import { AbstractModel } from '@/intiv/core/Domain/Model';
+import { EventBus } from '@/intiv/utils/EventBus/index';
+import { ObjectManager } from '@/intiv/utils/ObjectManager/index';
 import { Store as VuexStore } from 'vuex';
 
 

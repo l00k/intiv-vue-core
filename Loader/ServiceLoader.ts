@@ -1,6 +1,6 @@
-import ModuleLoader from '@/core/Loader/ModuleLoader';
-import { ObjectManager, Inject } from '@100k/intiv/ObjectManager';
-import { isArrowFunction } from '@100k/intiv/Utility';
+import ModuleLoader from '@/intiv/core/Loader/ModuleLoader';
+import { ObjectManager, Inject } from '@/intiv/utils/ObjectManager';
+import { isArrowFunction } from '@/intiv/utils/Utility';
 import _ from 'lodash';
 
 

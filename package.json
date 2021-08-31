@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "license": "MIT",
     "dependencies": {
-        "@100k/intiv": "^0.8.1",
+        "@/intiv/utils": "^0.8.1",
         "axios": "^0.21.1",
         "buefy": "^0.8.20",
         "core-js": "^3.12.1",

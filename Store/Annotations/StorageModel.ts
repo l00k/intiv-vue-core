@@ -1,4 +1,4 @@
-import { AbstractModel } from '@/core/Domain/Model';
+import { AbstractModel } from '@/intiv/core/Domain/Model';
 import StoreManager from '../StoreManager';
 
 

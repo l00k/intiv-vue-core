@@ -1,4 +1,4 @@
-import { ObjectManager } from '@100k/intiv/ObjectManager/index';
+import { ObjectManager } from '@/intiv/utils/ObjectManager/index';
 import { componentFactory } from 'vue-class-component/lib/component';
 
 

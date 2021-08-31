@@ -1,4 +1,4 @@
-import AbstractModel from '@/core/Domain/Model/AbstractModel';
+import AbstractModel from '@/intiv/core/Domain/Model/AbstractModel';
 
 
 export type StorageModelClass = {

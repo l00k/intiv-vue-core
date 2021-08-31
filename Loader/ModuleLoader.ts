@@ -1,4 +1,4 @@
-import { InitiationException } from '@100k/intiv/Exception';
+import { InitiationException } from '@/intiv/utils/Exception';
 
 
 type Callback = (data : any, previousResult : any) => any;

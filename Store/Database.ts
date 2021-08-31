@@ -1,8 +1,8 @@
-import App from '@/core/App';
-import { AbstractModel } from '@/core/Domain/Model';
-import { StoreManager } from '@/core/Store';
-import { StorageModelClass } from '@/core/Store/def';
-import { ObjectManager } from '@100k/intiv/ObjectManager';
+import App from '@/intiv/core/App';
+import { AbstractModel } from '@/intiv/core/Domain/Model';
+import { StoreManager } from '@/intiv/core/Store';
+import { StorageModelClass } from '@/intiv/core/Store/def';
+import { ObjectManager } from '@/intiv/utils/ObjectManager';
 import { v4 as uuidv4 } from 'uuid';
 import Vue from 'vue';
 import { Module, Mutation, VuexModule, Action } from 'vuex-module-decorators';

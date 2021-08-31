@@ -1,6 +1,6 @@
 import { RouteConfig } from 'vue-router';
-import { ObjectManager } from '@100k/intiv/ObjectManager';
-import App from '@/core/App';
+import { ObjectManager } from '@/intiv/utils/ObjectManager';
+import App from '@/intiv/core/App';
 
 
 export default function Route(path : string, name : string, options : Partial<RouteConfig> = {})

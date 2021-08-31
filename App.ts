@@ -1,10 +1,10 @@
-import ModuleLoader from '@/core/Loader/ModuleLoader';
-import ServiceLoader from '@/core/Loader/ServiceLoader';
-import StoreManager from '@/core/Store/StoreManager';
-import AppComponent from '@/core/Vue/AppComponent.vue';
-import { Configuration } from '@100k/intiv/Configuration';
-import { EventBus } from '@100k/intiv/EventBus';
-import { Inject } from '@100k/intiv/ObjectManager';
+import ModuleLoader from '@/intiv/core/Loader/ModuleLoader';
+import ServiceLoader from '@/intiv/core/Loader/ServiceLoader';
+import StoreManager from '@/intiv/core/Store/StoreManager';
+import AppComponent from '@/intiv/core/Vue/AppComponent.vue';
+import { Configuration } from '@/intiv/utils/Configuration';
+import { EventBus } from '@/intiv/utils/EventBus';
+import { Inject } from '@/intiv/utils/ObjectManager';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex, { Store as VuexStore } from 'vuex';
