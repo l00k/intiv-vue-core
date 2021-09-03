@@ -21,7 +21,7 @@ function Component(config : any = {})
         config.mixins.push({
             created()
             {
-                ObjectManager.loadDependencies(this, Target.prototype);
+                ObjectManager.getSingleton().loadDependencies(this, Target.prototype);
             }
         });
 

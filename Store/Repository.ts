@@ -16,8 +16,9 @@ export default class Repository<T extends AbstractModel<T>>
 
     protected constructor(model : typeof AbstractModel)
     {
-        this.eventBus = ObjectManager.getInstance(EventBus);
-        this.store = ObjectManager.getInstance(App).getVuexStore();
+        const objectManager = ObjectManager.getSingleton();
+        this.eventBus = objectManager.getInstance(EventBus);
+        this.store = objectManager.getInstance(App).getVuexStore();
         this.model = model;
     }
 

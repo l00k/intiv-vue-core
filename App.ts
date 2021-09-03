@@ -4,11 +4,12 @@ import StoreManager from '@/intiv/core/Store/StoreManager';
 import AppComponent from '@/intiv/core/Vue/AppComponent.vue';
 import { Configuration } from '@/intiv/utils/Configuration';
 import { EventBus } from '@/intiv/utils/EventBus';
-import { Inject } from '@/intiv/utils/ObjectManager';
+import { Inject, ObjectManager } from '@/intiv/utils/ObjectManager';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex, { Store as VuexStore } from 'vuex';
 import isEmpty from 'lodash/isEmpty';
+import camelCase from 'lodash/camelCase';
 
 
 export default class App
@@ -35,8 +36,12 @@ export default class App
     public async run()
     {
         // load configuration
-        const configData = await this.loadConfigData();
-        this.configuration.load(configData);
+        await this.loadConfigData();
+
+        // register configuration under object manager handlers
+        const configuration = Configuration.getSingleton();
+        ObjectManager.getSingleton()
+            .registerHandler(configuration.injectConfigurationValues.bind(configuration));
 
         // load services
         await this.serviceLoader.load();
@@ -112,9 +117,22 @@ export default class App
 
     protected async loadConfigData()
     {
-        const moduleConfig = this.moduleLoader.loadFilePerModule('etc/config');
-        return Object.values(moduleConfig)
-            .reduce((prev, curr) => Object.assign({}, prev, curr), {});
+        const configuration = Configuration.getSingleton();
+
+        // per module configuration
+        const moduleConfigPackages = await this.moduleLoader.loadFilePerModule('etc/config');
+
+        Object.entries(moduleConfigPackages)
+            .forEach(([moduleName, moduleConfigPackage]) => {
+                const moduleCode = camelCase(moduleName);
+                const configData = (<any>moduleConfigPackage).default;
+                configuration.load(configData, `module.${moduleCode}`);
+            });
+
+        // global configuration
+        const configData = require('@/etc/config').default;
+        configuration
+            .load(configData);
     }
 
 }

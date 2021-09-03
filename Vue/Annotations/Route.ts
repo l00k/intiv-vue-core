@@ -13,7 +13,8 @@ export default function Route(path : string, name : string, options : Partial<Ro
             ...options
         };
 
-        ObjectManager.getInstance(App)
+        ObjectManager.getSingleton()
+            .getInstance(App)
             .getVueRouter()
             .addRoute(routeRecord);
     };

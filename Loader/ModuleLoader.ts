@@ -1,13 +1,3 @@
-import { InitiationException } from '@/intiv/utils/Exception';
-
-
-type Callback = (data : any, previousResult : any) => any;
-
-type Listners = {
-    [eventName : string] : Callback[]
-};
-
-
 export default class ModuleLoader
 {
 
