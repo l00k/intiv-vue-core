@@ -4,7 +4,7 @@ import StoreManager from '@/intiv/core/Store/StoreManager';
 import AppComponent from '@/intiv/core/Vue/AppComponent.vue';
 import { Configuration } from '@/intiv/utils/Configuration';
 import { EventBus } from '@/intiv/utils/EventBus';
-import { Inject, ObjectManager } from '@/intiv/utils/ObjectManager';
+import { Inject, ObjectManager, Singleton } from '@/intiv/utils/ObjectManager';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Vuex, { Store as VuexStore } from 'vuex';
@@ -12,6 +12,7 @@ import isEmpty from 'lodash/isEmpty';
 import camelCase from 'lodash/camelCase';
 
 
+@Singleton()
 export default class App
 {
 
@@ -27,11 +28,13 @@ export default class App
     @Inject()
     protected serviceLoader : ServiceLoader;
 
+
     protected vue : Vue;
 
     protected vuexStore : VuexStore<any>;
 
     protected vueRouter : VueRouter;
+
 
     public async run()
     {
@@ -130,7 +133,7 @@ export default class App
             });
 
         // global configuration
-        const configData = require('@/etc/config').default;
+        const configData = require('@/etc/config.ts').default;
         configuration
             .load(configData);
     }
