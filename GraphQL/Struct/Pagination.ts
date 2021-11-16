@@ -19,7 +19,7 @@ export default class Pagination
     public itemsPerPage : number = 25;
 
     @Property()
-    public itemsPerPageOptions : number[] = [ 25, 50, 100 ];
+    public itemsPerPageOptions : number[] = [ 25, 50, 100, 200 ];
 
     @Property()
     public total : number = 0;
