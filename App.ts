@@ -1,8 +1,7 @@
 import ModuleLoader from '@/intiv/core/Loader/ModuleLoader';
 import ServiceLoader from '@/intiv/core/Loader/ServiceLoader';
 import StoreManager from '@/intiv/core/Store/StoreManager';
-import AppComponent from '@/intiv/core/Vue/AppComponent.vue';
-import { Configuration } from '@/intiv/utils/Configuration';
+import { Config, Configuration } from '@/intiv/utils/Configuration';
 import { EventBus } from '@/intiv/utils/EventBus';
 import { Inject, ObjectManager, Singleton } from '@/intiv/utils/ObjectManager';
 import Vue from 'vue';
@@ -10,13 +9,13 @@ import VueRouter from 'vue-router';
 import Vuex, { Store as VuexStore } from 'vuex';
 import isEmpty from 'lodash/isEmpty';
 import camelCase from 'lodash/camelCase';
+import AppComponent from '@/intiv/core/Vue/AppComponent.vue';
 
 
 @Singleton()
 export default class App
 {
 
-    @Inject()
     protected configuration : Configuration;
 
     @Inject()
@@ -42,9 +41,8 @@ export default class App
         await this.loadConfigData();
 
         // register configuration under object manager handlers
-        const configuration = Configuration.getSingleton();
         ObjectManager.getSingleton()
-            .registerHandler(configuration.injectConfigurationValues.bind(configuration));
+            .registerHandler(this.configuration.injectConfigurationValues.bind(this.configuration));
 
         // load services
         await this.serviceLoader.load();
@@ -74,10 +72,11 @@ export default class App
         await this.loadVueExts();
 
         // init app
+        const appComponent : typeof AppComponent = this.configuration.get('core.layout.appComponent', AppComponent);
         this.vue = new Vue({
             router: this.vueRouter,
             store: this.vuexStore,
-            render: h => h(AppComponent),
+            render: h => h(appComponent),
         });
 
         await this.vue.$mount('#app');
@@ -120,21 +119,20 @@ export default class App
 
     protected async loadConfigData()
     {
-        const configuration = Configuration.getSingleton();
+        this.configuration = Configuration.getSingleton();
 
         // per module configuration
         const moduleConfigPackages = await this.moduleLoader.loadFilePerModule('etc/config');
 
         Object.entries(moduleConfigPackages)
             .forEach(([moduleName, moduleConfigPackage]) => {
-                const moduleCode = camelCase(moduleName);
                 const configData = (<any>moduleConfigPackage).default;
-                configuration.load(configData, `module.${moduleCode}`);
+                this.configuration.load(configData);
             });
 
         // global configuration
         const configData = require('@/etc/config.ts').default;
-        configuration
+        this.configuration
             .load(configData);
     }
 

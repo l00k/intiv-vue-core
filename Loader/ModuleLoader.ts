@@ -1,11 +1,47 @@
+import _ from 'lodash';
+
+
+export type ModuleDescription = {
+    priority: number,
+    code: string,
+};
+
+
 export default class ModuleLoader
 {
+
+    protected modules : { [moduleName: string] : ModuleDescription } = {};
+
+
+    public async loadModules()
+    {
+        if (!this.modules) {
+            const modules = await this._loadFilePerModule(
+                'etc/module',
+                require.context('@/modules', true, /\.ts$/)
+            );
+            
+            this.modules = Object.fromEntries(
+                Object.entries(modules)
+                    .sort((a, b) => a[1].priority < b[1].priority ? -1 : 1)
+            );
+            
+            for (const moduleName in this.modules) {
+                this.modules[moduleName] = {
+                    code: _.camelCase(moduleName),
+                    ...this.modules[moduleName],
+                }
+            }
+        }
+        
+        return this.modules;
+    }
 
     public async loadComponents(types : string[])
     {
         return this._loadComponentsFromModules(
             types,
-            require.context('@/modules', true, /\.(ts|vue)/)
+            require.context('@/modules', true, /\.(ts|vue)$/)
         );
     }
 
@@ -13,7 +49,7 @@ export default class ModuleLoader
     {
         return this._loadFilePerModule(
             file,
-            require.context('@/modules', true, /\.(ts|vue)/)
+            require.context('@/modules', true, /\.(ts|vue)$/)
         );
     }
 
@@ -47,7 +83,7 @@ export default class ModuleLoader
         return modules;
     }
 
-    protected async _loadFilePerModule(file : string, require)
+    protected async _loadFilePerModule(file : string, require) : Promise<{ [moduleName : string]: any }>
     {
         const files : any = {};
 
